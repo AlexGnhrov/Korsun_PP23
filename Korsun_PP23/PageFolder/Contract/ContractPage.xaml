@@ -1,0 +1,126 @@
+﻿<Page x:Class="Korsun_PP23.PageFolder.ContractPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Korsun_PP23.PageFolder"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="Список контрактов">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Margin="10" Orientation="Horizontal">
+
+                <TextBox x:Name="SearchTB" KeyDown="SearchTB_KeyDown"
+                         Width="500"
+                         Margin="0">
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="TextBox">
+                            <Grid>
+                                <Border>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="60"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Name="SearchTextLBtb" Content="Поиск" Style="{StaticResource SearchLabel}" Visibility="Collapsed" Margin="0,0,0,-5"/>
+
+                                        <ScrollViewer Grid.ColumnSpan="2" x:Name="PART_ContentHost" Margin="0,0,0,-5"
+                                                  Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+
+                                        <Label Name="DeleteTextLBtb" Grid.Column="2" Content="❌"  Margin="0,0,0,-5" Style="{StaticResource SearchLabel}" Cursor="Hand"
+                                           MouseLeftButtonUp="DeleteTextLBtb_MouseLeftButtonUp"/>
+
+                                        <Image x:Name="SearchLB" Grid.Column="3" Source="/Korsun_PP23;component/ResourceFolder/ImageFolder/SearchIcon.png"
+                                           Height="20" Width="20" Margin="0,0,0,-5"  Cursor="Hand" MouseLeftButtonUp="SearchLB_MouseLeftButtonUp"/>
+
+                                        <Border Grid.ColumnSpan="4" CornerRadius="2" Background="Black" VerticalAlignment="Bottom" Height="2"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Text" Value="">
+                                    <Setter TargetName="SearchTextLBtb" Property="Visibility" Value="Visible"/>
+                                    <Setter TargetName="DeleteTextLBtb" Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Opacity" Value="0.56"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+
+            </StackPanel>
+
+            <Button x:Name="AddContractBtn" Content="Добавить" Grid.Column="1"
+                    Height="Auto" Width="150"
+                    Margin="10"
+                    Click="AddContractBtn_Click" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <DataGrid x:Name="ContractListDG" MouseDoubleClick="ContractListDG_MouseDoubleClick">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="№ Договора" Width="200"
+                                        Binding="{Binding ContractNumber,StringFormat={}№ {0} }"
+                                        CellStyle="{StaticResource LContenLefttDGCell}"
+                                        HeaderStyle="{StaticResource LeftHeader}"/>
+
+                    <DataGridTextColumn Header="Дата" Width="225"
+                                        Binding="{Binding ContractDate, StringFormat={}dd.MM.yyyy}"
+                                        HeaderStyle="{StaticResource StandartHeader}"/>
+
+                    <DataGridTextColumn Header="Наименование" Width="*"
+                                        Binding="{Binding ContractName}"
+                                        CellStyle="{StaticResource ContenLefttDGCell}"
+                                        HeaderStyle="{StaticResource StandartHeader}"/>
+                    
+                    <DataGridTextColumn x:Name="OrganizationDGTC" Header="Организация" Width="*"
+                                        Binding="{Binding Organization.OrganizationName}"
+                                        CellStyle="{StaticResource ContenLefttDGCell}"
+                                        HeaderStyle="{StaticResource StandartHeader}"/>
+
+
+                    <DataGridTemplateColumn  x:Name="ActionDGTC" Width="50"
+                                             CellStyle="{StaticResource RightDGCell}"
+                                             HeaderStyle="{StaticResource RightHeader}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="40" Height="40" Background="Transparent"                                       
+                                        ContextMenuService.IsEnabled="False" Click="Button_Click" >
+                                    <Button.Content>
+                                        <Image Source="/Korsun_PP23;component/ResourceFolder/ImageFolder/ThreeDotsIcon.png" Height="25" />
+                                    </Button.Content>
+                                    <Button.ContextMenu>
+                                        <ContextMenu Placement="Left" >
+                                            <MenuItem Header="Редактировать" Click="EditVehicleMI_Click"/>
+                                            <MenuItem Header="Удалить" Foreground="#E81123" Click="RemoveVehicleMI_Click"/>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>

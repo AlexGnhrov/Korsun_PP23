@@ -1,0 +1,139 @@
+﻿<Page x:Class="Korsun_PP23.PageFolder.EmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Korsun_PP23.PageFolder"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="Список сотрудников">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="SearchTB" Width="500" Margin="10" HorizontalAlignment="Left" KeyDown="SearchTB_KeyDown">
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Border>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Name="SearchTextLBtb" Content="Поиск" Style="{StaticResource SearchLabel}" Visibility="Collapsed" Margin="0,0,0,-5"/>
+
+                                    <ScrollViewer Grid.ColumnSpan="2" x:Name="PART_ContentHost" Margin="0,0,0,-5"
+                                                  Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+
+                                    <Label Name="DeleteTextLBtb" Grid.Column="2" Content="❌"  Margin="0,0,0,-5" Style="{StaticResource SearchLabel}" Cursor="Hand"
+                                           MouseLeftButtonUp="DeleteTextLBtb_MouseLeftButtonUp"/>
+
+
+                                    <Image x:Name="SearchLB" Grid.Column="3" Source="/Korsun_PP23;component/ResourceFolder/ImageFolder/SearchIcon.png"
+                                           Height="20" Width="20" Margin="0,0,0,-5"  Cursor="Hand" MouseLeftButtonUp="SearchLB_MouseLeftButtonUp"/>
+
+                                    <Border Grid.ColumnSpan="4" CornerRadius="2" Background="Black" VerticalAlignment="Bottom" Height="2"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="SearchTextLBtb" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="DeleteTextLBtb" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" Value="0.56"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+
+            <Button x:Name="AddEmployeeBtn" Content="Добавить" Grid.Column="1"  Width="150" Margin="10" Height="Auto" Click="AddEmployee_Click"/>
+        </Grid>
+
+        <Border CornerRadius="10" Background="{StaticResource MainColor}" Grid.Row="1" Margin="10" Opacity="0.90"/>
+
+        <ListView x:Name="EmployeeLV" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Height="auto" Grid.Row="2" Margin="0,0,0,10"
+                  MouseDoubleClick="DishInfoLV_MouseDoubleClick">
+            <ListView.ContextMenu>
+                <ContextMenu Name="EmployeeMenuCM">
+                    <MenuItem Name="EditEmployeeMI" Header="Редактировать" Click="EditEmployeeMI_Click" />
+                    <MenuItem Name="RemoveEmployeeMI" Header="Удалить" Foreground="#E81123" Click="RemoveEmployeeMI_Click"/> 
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="375">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel HorizontalAlignment="Center"  >
+                                <Label Content="Имя" Margin="0,5"/>
+                                <Label Content="Фамилия" Margin="0,5"/>
+                                <Label Content="Отчество" Margin="0,5"/>
+                                <Label Content="Номер телефона" Margin="0,5"/>
+                                <Label Content="Дата рождения" Margin="0,5"/>
+                                <Label Content="Логин" Margin="0,5"/>
+                                <Label Content="Должность" Margin="0,5"/>
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Center"  Grid.Column="1">
+                                <Label Content="{Binding FirstNameUser}" Margin="0,5"/>
+                                <Label Content="{Binding LastNameUser}" Margin="0,5"/>
+                                <Label Content="{Binding MiddleNameUser,FallbackValue='32'}" Margin="0,5"/>
+                                <Label Content="{Binding PhoneNum}" Margin="0,5"/>
+                                <Label Content="{Binding BirthDate}" Margin="0,5"/>
+                                <Label Content="{Binding Login}" Margin="0,5"/>
+                                <Label Content="{Binding Role.RoleName}" Margin="0,5"/>
+                            </StackPanel>
+
+
+
+
+                            <Border  HorizontalAlignment="Center" Margin="10"
+                                     Grid.Column="2" CornerRadius="50"
+                                     BorderThickness="2" Height="275" Width="300">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding Photo}" Stretch="UniformToFill" />
+                                </Border.Background>
+                            </Border>
+
+
+                            <Image Source=""/>
+                        </Grid>
+
+                        <Border CornerRadius="10" Background="{StaticResource MainColor}" 
+                                Grid.Row="1" Height="50"  Opacity="0.90"/>
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Page>

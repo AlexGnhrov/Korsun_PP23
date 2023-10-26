@@ -1,0 +1,132 @@
+﻿<Page x:Class="Korsun_PP23.PageFolder.Storage.AEStoragePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Korsun_PP23.PageFolder.Storage"
+      mc:Ignorable="d" 
+      d:DesignHeight="850" d:DesignWidth="1200"
+      Title="Добавление скалада" KeyDown="Page_KeyDown">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BackBtn" Background="Transparent"
+                    Foreground="{StaticResource MaterialDesignBody}"
+                    BorderThickness="1" Content="Назад" Grid.Column="1"
+                    Width="125" Margin="10" Height="Auto" Click="BackBtn_Click"/>
+        </Grid>
+
+        <Border CornerRadius="10" Background="{StaticResource MainColor}" Grid.Row="1" Margin="10" Opacity="0.90"/>
+
+        <Grid Grid.Row="2" MaxWidth="1400" MaxHeight="750" HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="445"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="80"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,10,0,0">
+                        <Label Content="Регион*" Margin="15,10"/>
+                        <Label Content="Город*" Margin="15,10"/>
+                        <Label Content="Улица*" Margin="15,10"/>
+                        <Label Content="Дом*" Margin="15,10"/>
+                        <Label Content="Строение" Margin="15,10"/>
+                        <Label Content="Название*" Margin="15,10"/>
+                        <Label Content="Телефон*" Margin="15,10"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" Grid.Column="2" Margin="0,10,0,0">
+                        <ComboBox Name="RegionCB" Height="45" Margin="0,5"
+                                  SelectedValuePath="IdRegion"
+                                  DisplayMemberPath="RegionName"
+                                  MouseDoubleClick="CB_MouseDoubleClick"
+                                  SelectionChanged="CB_SelectionChanged"/>
+                        <ComboBox Name="CityCB" Height="45" Margin="0,5"
+                                  SelectedValuePath="IdCity"
+                                  DisplayMemberPath="CityName"
+                                  MouseDoubleClick="CB_MouseDoubleClick"
+                                  SelectionChanged="CB_SelectionChanged"/>
+                        <ComboBox Name="StreetCB" Height="45" Margin="0,5"
+                                  SelectedValuePath="IdStreet"
+                                  MouseDoubleClick="CB_MouseDoubleClick"
+                                  DisplayMemberPath="StreetName"
+                                  SelectionChanged="CB_SelectionChanged"/>
+                        <TextBox x:Name="HouseTB"  Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5" MaxLength="4"
+                                 PreviewTextInput="TB_PreviewTextInput" 
+                                 TextChanged="TB_TextChanged"/>
+                        <TextBox x:Name="BuildingTB"  Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5" MaxLength="4"
+                                  PreviewTextInput="TB_PreviewTextInput" 
+                                 TextChanged="TB_TextChanged"/>
+                        <TextBox x:Name="CompanyNameTB" MaxLength="70"  Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5"
+                                 TextChanged="TB_TextChanged"/>
+                        <TextBox x:Name="PhoneNumTB"  Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5" MaxLength="18"
+                                 PreviewTextInput="TB_PreviewTextInput"
+                                 TextChanged="TB_TextChanged"/>
+                    </StackPanel>
+
+                    <Grid Grid.Column="3" Margin="0,10,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="52"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="52"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Image Name="AddRegionIm" Style="{StaticResource AddButtonCB}" MouseLeftButtonUp="AddIM_MouseLeftButtonUp"  />
+                        <Image x:Name="AddCityIm" Style="{StaticResource AddButtonCB}" Grid.Row="2" MouseLeftButtonUp="AddIM_MouseLeftButtonUp"  />
+                        <Image x:Name="AddStreetIM" Style="{StaticResource AddButtonCB}" Grid.Row="4"  MouseLeftButtonUp="AddIM_MouseLeftButtonUp"  />
+                    </Grid>
+
+                </Grid>
+
+
+
+                <Button x:Name="AddEdtBtn" Content="Добавить склад" IsEnabled="True"
+                        Grid.Row="1" Height="45" VerticalAlignment="Top"
+                        HorizontalAlignment="Center" Click="AddEdtBtn_Click"/>
+
+            </Grid>
+
+
+
+
+        </Grid>
+
+    </Grid>
+</Page>

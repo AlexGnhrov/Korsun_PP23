@@ -49,7 +49,7 @@ namespace Korsun_PP23.PageFolder
                 if (GlobalVariablesClass.currentRoleID == 2)// Водитель
                 {
                     VehclieListDG.ItemsSource = DBEntities.GetContext().Transport.Where(u => u.TransportName.Contains(SearchTB.Text) ||
-                                                                  u.GOSNumber.Contains(SearchTB.Text) ||
+                                                                  u.TSNumber.Contains(SearchTB.Text) ||
                                                                   u.User.FirstNameUser.Contains(SearchTB.Text) ||
                                                                   u.User.MiddleNameUser.Contains(SearchTB.Text) ||
                                                                   u.User.LastNameUser.Contains(SearchTB.Text)).
@@ -58,7 +58,7 @@ namespace Korsun_PP23.PageFolder
                 else
                 {
                     VehclieListDG.ItemsSource = DBEntities.GetContext().Transport.Where(u => u.TransportName.Contains(SearchTB.Text) ||
-                                                  u.GOSNumber.Contains(SearchTB.Text) ||
+                                                  u.TSNumber.Contains(SearchTB.Text) ||
                                                   u.User.FirstNameUser.Contains(SearchTB.Text) ||
                                                   u.User.MiddleNameUser.Contains(SearchTB.Text) ||
                                                   u.User.LastNameUser.Contains(SearchTB.Text)).ToList();
@@ -83,7 +83,7 @@ namespace Korsun_PP23.PageFolder
 
         private void AddVechileBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AEVehclePage(this, null));
+            NavigationService.Navigate(new AEVehclePage(this, null,false));
         }
 
         private void SearchTB_KeyDown(object sender, KeyEventArgs e)
@@ -99,9 +99,9 @@ namespace Korsun_PP23.PageFolder
             if (e.ChangedButton == MouseButton.Left)
             {
 
-                if (VehclieListDG.SelectedItem != null && !blockEditing) //Водитель
+                if (VehclieListDG.SelectedItem != null) //Водитель
                 {
-                    NavigationService.Navigate(new AEVehclePage(this, VehclieListDG.SelectedItem as Transport));
+                    NavigationService.Navigate(new AEVehclePage(this, VehclieListDG.SelectedItem as Transport, true));
                 }
 
             }
@@ -113,7 +113,7 @@ namespace Korsun_PP23.PageFolder
 
         private void EditVehicleMI_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AEVehclePage(this, VehclieListDG.SelectedItem as Transport));
+            NavigationService.Navigate(new AEVehclePage(this, VehclieListDG.SelectedItem as Transport,false));
         }
 
         private void RemoveVehicleMI_Click(object sender, RoutedEventArgs e)
@@ -144,6 +144,11 @@ namespace Korsun_PP23.PageFolder
 
             button.ContextMenu.PlacementTarget = (UIElement)sender;
             button.ContextMenu.IsOpen = true;
+        }
+
+        private void MoreInfoMI_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AEVehclePage(this, VehclieListDG.SelectedItem as Transport,true));
         }
     }
 }

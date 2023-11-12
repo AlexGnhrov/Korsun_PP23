@@ -15,16 +15,12 @@ namespace Korsun_PP23.DataFolder
     public partial class Warehouse
     {
         public int IdWarehouse { get; set; }
-        public int IdRegion { get; set; }
-        public int IdCity { get; set; }
-        public int IdStreet { get; set; }
-        public string House { get; set; }
-        public string Building { get; set; }
+        public int IdAddress { get; set; }
         public string WarehouseName { get; set; }
         public string WarPhoneNumber { get; set; }
+        public Nullable<int> IdContract { get; set; }
     
-        public virtual City City { get; set; }
-        public virtual Region Region { get; set; }
-        public virtual Street Street { get; set; }
+        public virtual Address Address { get; set; }
+        public virtual Contract Contract { get; set; }
     }
 }

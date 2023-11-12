@@ -45,10 +45,11 @@ namespace Korsun_PP23.PageFolder
             {
             StorageLV.ItemsSource = DBEntities.GetContext().Warehouse.Where(u => u.WarehouseName.Contains(SearchTB.Text) ||
                                                                                  u.WarPhoneNumber.Contains(SearchTB.Text) ||
-                                                                                 u.Region.RegionName.Contains(SearchTB.Text) ||
-                                                                                 u.City.CityName.Contains(SearchTB.Text) ||
-                                                                                 u.Street.StreetName.Contains(SearchTB.Text) ||
-                                                                                 u.House.Contains(SearchTB.Text)).ToList();
+                                                                                 u.Contract.ContractName.Contains(SearchTB.Text) ||
+                                                                                 u.Address.Region.RegionName.Contains(SearchTB.Text) ||
+                                                                                 u.Address.City.CityName.Contains(SearchTB.Text) ||
+                                                                                 u.Address.Street.StreetName.Contains(SearchTB.Text) ||
+                                                                                 u.Address.House.Contains(SearchTB.Text)).ToList();
             }
 
 

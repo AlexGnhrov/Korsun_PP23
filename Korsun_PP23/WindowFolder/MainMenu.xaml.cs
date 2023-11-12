@@ -19,7 +19,7 @@ namespace Korsun_PP23.WindowFolder
             GlobalVariablesClass.mainMenu = this;
 
             ShopBtn.Visibility = Visibility.Collapsed;
-            HomeBtn.Visibility = Visibility.Collapsed;
+            //HomeBtn.Visibility = Visibility.Collapsed;
 
 
             switch (GlobalVariablesClass.currentRoleID)
@@ -43,9 +43,9 @@ namespace Korsun_PP23.WindowFolder
             }
 
 
-            //MainFrame.Navigate(new MainMenuPage());
-            //currentBtn = HomeBtn;
-            //currentBtn.Tag = "Using";
+            MainFrame.Navigate(new MainMenuPage());
+            currentBtn = HomeBtn;
+            currentBtn.Tag = "Using";
 
 
 

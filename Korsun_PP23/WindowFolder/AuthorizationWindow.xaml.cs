@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using TC_Application.AppFolder.GlobalClassFolder;
 
+
 namespace Korsun_PP23.WindowFolder
 {
     /// <summary>

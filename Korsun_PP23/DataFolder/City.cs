@@ -17,13 +17,13 @@ namespace Korsun_PP23.DataFolder
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public City()
         {
-            this.Warehouse = new HashSet<Warehouse>();
+            this.Address = new HashSet<Address>();
         }
     
         public int IdCity { get; set; }
         public string CityName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Warehouse> Warehouse { get; set; }
+        public virtual ICollection<Address> Address { get; set; }
     }
 }

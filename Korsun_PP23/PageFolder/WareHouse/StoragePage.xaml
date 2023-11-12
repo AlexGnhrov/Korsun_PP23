@@ -96,6 +96,7 @@
                                 <RowDefinition /> 
                                 <RowDefinition Height="130"/> 
                                 <RowDefinition/> 
+                                <RowDefinition/> 
                             </Grid.RowDefinitions>
 
 
@@ -104,11 +105,11 @@
                                          VerticalAlignment="Top">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}Регион: {0}&#xA;Город: {1}&#xA;Улица: {2}&#xA;Дом: {3}&#xA;Корпус: {4}">
-                                        <Binding Path="Region.RegionName"/>
-                                        <Binding Path="City.CityName"/>
-                                        <Binding Path="Street.StreetName"/>
-                                        <Binding Path="House"/>
-                                        <Binding Path="Building" FallbackValue="-"/>
+                                        <Binding Path="Address.Region.RegionName"/>
+                                        <Binding Path="Address.City.CityName"/>
+                                        <Binding Path="Address.Street.StreetName"/>
+                                        <Binding Path="Address.House"/>
+                                        <Binding Path="Address.Building" FallbackValue="-"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -122,7 +123,8 @@
                             <Label Content="Телефон" Margin="10" Grid.Row="2"/>
                             <Label Content="{Binding WarPhoneNumber}" Margin="0,5"  Grid.Column="1" Grid.Row="2"/>
 
-
+                            <Label Content="Контракт" Margin="10"  Grid.Row="3"/>
+                            <Label Content="{Binding Contract.ContractName}" Margin="0,5"  Grid.Column="1" Grid.Row="3"/>
 
 
 

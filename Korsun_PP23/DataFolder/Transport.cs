@@ -17,8 +17,14 @@ namespace Korsun_PP23.DataFolder
         public int IdTransport { get; set; }
         public int IdTransportType { get; set; }
         public string TransportName { get; set; }
-        public string GOSNumber { get; set; }
+        public string TSNumber { get; set; }
         public int IdUser { get; set; }
+        public string STS { get; set; }
+        public string PTS { get; set; }
+        public byte[] Photo { get; set; }
+        public string PowerHP { get; set; }
+        public string EngineType { get; set; }
+        public string YearOfProuction { get; set; }
     
         public virtual TransportType TransportType { get; set; }
         public virtual User User { get; set; }

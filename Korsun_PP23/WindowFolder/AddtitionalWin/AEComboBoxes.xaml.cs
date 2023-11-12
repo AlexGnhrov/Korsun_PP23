@@ -238,7 +238,7 @@ namespace Korsun_PP23.WindowFolder.AddtitionalWin
                             Region region = EditItem as Region;
 
 
-                            var checkOrg = DBEntities.GetContext().Warehouse.FirstOrDefault(u => u.Region.RegionName == AddEditItemTB.Text);
+                            var checkOrg = DBEntities.GetContext().Address.FirstOrDefault(u => u.Region.RegionName == AddEditItemTB.Text);
 
                             if (checkOrg != null && ItemText != AddEditItemTB.Text)
                             {
@@ -285,7 +285,7 @@ namespace Korsun_PP23.WindowFolder.AddtitionalWin
                             City city = EditItem as City;
 
 
-                            var checkOrg = DBEntities.GetContext().Warehouse.FirstOrDefault(u => u.City.CityName == AddEditItemTB.Text);
+                            var checkOrg = DBEntities.GetContext().Address.FirstOrDefault(u => u.City.CityName == AddEditItemTB.Text);
 
                             if (checkOrg != null && ItemText != AddEditItemTB.Text)
                             {
@@ -332,7 +332,7 @@ namespace Korsun_PP23.WindowFolder.AddtitionalWin
                             Street street = EditItem as Street;
 
 
-                            var checkOrg = DBEntities.GetContext().Warehouse.FirstOrDefault(u => u.Street.StreetName == AddEditItemTB.Text);
+                            var checkOrg = DBEntities.GetContext().Address.FirstOrDefault(u => u.Street.StreetName == AddEditItemTB.Text);
 
                             if (checkOrg != null && ItemText != AddEditItemTB.Text)
                             {
@@ -417,7 +417,7 @@ namespace Korsun_PP23.WindowFolder.AddtitionalWin
 
                         case "RegionCB":
                             {
-                                var CheckReg = DBEntities.GetContext().Warehouse.FirstOrDefault(u => u.IdRegion == (int)comboBox.SelectedValue);
+                                var CheckReg = DBEntities.GetContext().Address.FirstOrDefault(u => u.IdRegion == (int)comboBox.SelectedValue);
 
                                 if (CheckReg != null)
                                 {
@@ -437,7 +437,7 @@ namespace Korsun_PP23.WindowFolder.AddtitionalWin
                             break;
                         case "CityCB":
                             {
-                                var CheckReg = DBEntities.GetContext().Warehouse.FirstOrDefault(u => u.IdCity == (int)comboBox.SelectedValue);
+                                var CheckReg = DBEntities.GetContext().Address.FirstOrDefault(u => u.ICity == (int)comboBox.SelectedValue);
 
                                 if (CheckReg != null)
                                 {
@@ -457,7 +457,7 @@ namespace Korsun_PP23.WindowFolder.AddtitionalWin
                             break;
                         case "StreetCB":
                             {
-                                var CheckReg = DBEntities.GetContext().Warehouse.FirstOrDefault(u => u.IdStreet == (int)comboBox.SelectedValue);
+                                var CheckReg = DBEntities.GetContext().Address.FirstOrDefault(u => u.IdStreet == (int)comboBox.SelectedValue);
 
                                 if (CheckReg != null)
                                 {

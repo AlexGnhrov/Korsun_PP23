@@ -25,6 +25,7 @@ namespace Korsun_PP23.DataFolder
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Organization> Organization { get; set; }

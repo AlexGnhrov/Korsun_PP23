@@ -18,9 +18,11 @@ namespace Korsun_PP23.PageFolder.Storage
     {
         StoragePage storagePage;
         Warehouse warehouse;
+        Address address;
 
         bool isEdit = false;
         string saveName = "";
+        string savePhone = "";
 
         public AEStoragePage(StoragePage storagePage, Warehouse warehouse)
         {
@@ -36,6 +38,7 @@ namespace Korsun_PP23.PageFolder.Storage
                 RegionCB.ItemsSource = DBEntities.GetContext().Region.ToList();
                 CityCB.ItemsSource = DBEntities.GetContext().City.ToList();
                 StreetCB.ItemsSource = DBEntities.GetContext().Street.ToList();
+                ContractCB.ItemsSource = DBEntities.GetContext().Contract.ToList();
 
                 PhoneNumTB.Text += "+7 ";
 
@@ -44,15 +47,19 @@ namespace Korsun_PP23.PageFolder.Storage
                     Title = "Редактирование склада";
                     AddEdtBtn.Content = "Редактировать склад";
 
+                    address = DBEntities.GetContext().Address.FirstOrDefault(u => u.IdAddress == warehouse.IdAddress);
 
-                    RegionCB.SelectedValue = warehouse.IdRegion;
-                    CityCB.SelectedValue = warehouse.IdCity;
-                    StreetCB.SelectedValue = warehouse.IdStreet;
 
-                    HouseTB.Text = warehouse.House;
-                    BuildingTB.Text = warehouse.Building;
+                    RegionCB.SelectedValue = address.IdRegion;
+                    CityCB.SelectedValue = address.ICity;
+                    StreetCB.SelectedValue = address.IdStreet;
+
+                    HouseTB.Text = address.House;
+                    BuildingTB.Text = address.Builing;
+
                     CompanyNameTB.Text = warehouse.WarehouseName;
-                    PhoneNumTB.Text = warehouse.WarPhoneNumber;
+                    PhoneNumTB.Text = savePhone = warehouse.WarPhoneNumber;
+                    ContractCB.SelectedValue = warehouse.IdContract;
 
                     AddEdtBtn.IsEnabled = false;
                 }
@@ -151,7 +158,6 @@ namespace Korsun_PP23.PageFolder.Storage
             try
             {
 
-
                 var checkLogin = DBEntities.GetContext().Contract.FirstOrDefault(u => u.ContractName == CompanyNameTB.Text.Trim());
 
                 if (checkLogin != null && saveName != CompanyNameTB.Text.Trim())
@@ -161,21 +167,43 @@ namespace Korsun_PP23.PageFolder.Storage
                     return;
                 }
 
+                var checkPhone = DBEntities.GetContext().Warehouse.FirstOrDefault(u => u.WarPhoneNumber == PhoneNumTB.Text);
 
-                if (!isEdit) warehouse = new Warehouse();
+                if (checkPhone != null && savePhone != PhoneNumTB.Text)
+                {
+                    MBClass.ErrorMB("Такой телефон уже существует");
+                    PhoneNumTB.Focus();
+                    return;
+                }
 
-                
-                warehouse.IdRegion = Convert.ToInt32(RegionCB.SelectedValue);
-                warehouse.IdCity = Convert.ToInt32(CityCB.SelectedValue);
-                warehouse.IdStreet = Convert.ToInt32(StreetCB.SelectedValue);
 
-                warehouse.House = HouseTB.Text.Trim();
-                warehouse.Building = string.IsNullOrWhiteSpace(BuildingTB.Text) ? "-" : BuildingTB.Text.Trim();
+                if (!isEdit)
+                {
+                    warehouse = new Warehouse();
+                    address = new Address();
+                }
+
+
+                address.IdRegion = Convert.ToInt32(RegionCB.SelectedValue);
+                address.ICity = Convert.ToInt32(CityCB.SelectedValue);
+                address.IdStreet = Convert.ToInt32(StreetCB.SelectedValue);
+
+                address.House = HouseTB.Text.Trim();
+                address.Builing = string.IsNullOrWhiteSpace(BuildingTB.Text) ? "-" : BuildingTB.Text.Trim();
+
+
                 warehouse.WarehouseName = CompanyNameTB.Text.Trim();
                 warehouse.WarPhoneNumber = PhoneNumTB.Text;
+                warehouse.IdContract = Convert.ToInt32(ContractCB.SelectedValue);
 
 
-                if (!isEdit) DBEntities.GetContext().Warehouse.Add(warehouse);
+                if (!isEdit)
+                {
+                    DBEntities.GetContext().Address.Add(address);
+                    warehouse.IdAddress = address.IdAddress;
+
+                    DBEntities.GetContext().Warehouse.Add(warehouse);                   
+                }
 
                 DBEntities.GetContext().SaveChanges();
 
@@ -200,6 +228,7 @@ namespace Korsun_PP23.PageFolder.Storage
             AddEdtBtn.IsEnabled = !(RegionCB.SelectedValue == null ||
                                     CityCB.SelectedValue == null ||
                                     StreetCB.SelectedValue == null ||
+                                    ContractCB.SelectedValue == null ||
                                     string.IsNullOrWhiteSpace(HouseTB.Text) ||
                                     string.IsNullOrWhiteSpace(CompanyNameTB.Text) ||
                                     string.IsNullOrWhiteSpace(PhoneNumTB.Text) ||

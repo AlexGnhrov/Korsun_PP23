@@ -1,10 +1,13 @@
 ﻿using Korsun_PP23.ClassFolder;
 using Korsun_PP23.DataFolder;
+using Microsoft.Win32;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using TC_Application.AppFolder.GlobalClassFolder;
 
@@ -20,11 +23,14 @@ namespace Korsun_PP23.PageFolder.Vehicle
 
         bool isEdit = false;
 
-        public AEVehclePage(VehiclePage vehiclePage, Transport transport)
+        string selectedPhotoFile = "";
+        string saveNum = "";
+        string saveSTS = "";
+        string savePTS = "";
+
+        public AEVehclePage(VehiclePage vehiclePage, Transport transport, bool noEdit)
         {
             InitializeComponent();
-
-
 
 
             this.transport = transport;
@@ -46,11 +52,42 @@ namespace Korsun_PP23.PageFolder.Vehicle
 
                     VehicleTypeCB.SelectedValue = transport.IdTransportType;
                     NameVehicleTB.Text = transport.TransportName;
-                    NumVehicleTB.Text = transport.GOSNumber;
+                    NumVehicleTB.Text = saveNum = transport.TSNumber;
                     DriverCB.SelectedValue = transport.IdUser;
+                    StsTB.Text = saveSTS = transport.STS;
+                    PtsTB.Text = savePTS = transport.PTS;
+                    PowerTB.Text = transport.PowerHP;
+                    TypeEngineTB.Text = transport.EngineType;
+                    YearOfProductionTB.Text = transport.YearOfProuction;
+
+                    if (transport.Photo != null)
+                    {
+                        selectedPhotoFile = "Фото есть";
+
+                        PhotoIB.ImageSource = LoadReadImageClass.BytesToImage(transport.Photo);
+                    }
 
                     AddEdtBtn.IsEnabled = false;
                 }
+
+                if (noEdit)
+                {
+                    Title = "Информация о транспорте";
+
+                    AddEdtBtn.Visibility = Visibility.Collapsed;
+
+                    VehicleTypeCB.IsReadOnly = true;
+                    NameVehicleTB.IsReadOnly = true;
+                    NumVehicleTB.IsReadOnly = true;
+                    DriverCB.IsReadOnly = true;
+                    StsTB.IsReadOnly = true;
+                    PtsTB.IsReadOnly = true;
+                    PowerTB.IsReadOnly = true;
+                    TypeEngineTB.IsReadOnly = true;
+                    YearOfProductionTB.IsReadOnly = true;
+                    BorderPhoto.IsEnabled = false;
+                }
+
             }
             catch (Exception ex)
             {
@@ -71,13 +108,49 @@ namespace Korsun_PP23.PageFolder.Vehicle
             try
             {
 
+                var checkNum = DBEntities.GetContext().Transport.FirstOrDefault(u => u.TSNumber == NumVehicleTB.Text);
+
+                if (checkNum != null && saveNum != NumVehicleTB.Text)
+                {
+                    MBClass.ErrorMB("Такой номер уже существует");
+                    NumVehicleTB.Focus();
+                    return;
+                }
+
+                var checkSts = DBEntities.GetContext().Transport.FirstOrDefault(u => u.STS == StsTB.Text);
+
+                if (checkNum != null && saveSTS != StsTB.Text)
+                {
+                    MBClass.ErrorMB("Такое свидетельство о регистрации транспортного средства уже существует");
+                    StsTB.Focus();
+                    return;
+                }
+
+                var checkPts = DBEntities.GetContext().Transport.FirstOrDefault(u => u.PTS == PtsTB.Text);
+
+                if (checkPts != null && savePTS != PtsTB.Text)
+                {
+                    MBClass.ErrorMB("Такой паспорт транспортного средства уже существует");
+                    PtsTB.Focus();
+                    return;
+                }
+
+
+
                 if (!isEdit)  transport = new Transport();
 
                 transport.IdTransportType = Convert.ToInt32(VehicleTypeCB.SelectedValue);
                 transport.TransportName = NameVehicleTB.Text.Trim();
-                transport.GOSNumber = NumVehicleTB.Text.Trim();
+                transport.TSNumber = NumVehicleTB.Text.Trim();                             
                 transport.IdUser = Convert.ToInt32(DriverCB.SelectedValue);
+                transport.STS = StsTB.Text.Trim();
+                transport.PTS = PtsTB.Text.Trim();
+                transport.PowerHP = PowerTB.Text.Trim();
+                transport.EngineType = TypeEngineTB.Text.Trim();
+                transport.YearOfProuction = YearOfProductionTB.Text.Trim();
 
+                if (selectedPhotoFile != "Фото есть")
+                    transport.Photo = LoadReadImageClass.ImageToByte(selectedPhotoFile);
 
 
                 if (!isEdit)
@@ -122,6 +195,11 @@ namespace Korsun_PP23.PageFolder.Vehicle
         {
             AddEdtBtn.IsEnabled = !(string.IsNullOrWhiteSpace(NameVehicleTB.Text) ||
                                     string.IsNullOrWhiteSpace(NumVehicleTB.Text) ||
+                                    string.IsNullOrWhiteSpace(StsTB.Text) ||
+                                    string.IsNullOrWhiteSpace(PtsTB.Text) ||
+                                    string.IsNullOrWhiteSpace(PowerTB.Text) ||
+                                    string.IsNullOrWhiteSpace(TypeEngineTB.Text) ||
+                                    string.IsNullOrWhiteSpace(YearOfProductionTB.Text) ||
                                     VehicleTypeCB.SelectedValue == null ||
                                     DriverCB.SelectedValue == null ||
                                     NumVehicleTB.Text.Length < 9);
@@ -136,6 +214,52 @@ namespace Korsun_PP23.PageFolder.Vehicle
         private void NumVehicleTB_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.OnlyRussian();
+        }
+
+        private void NameVehicleTB_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                Border underBrush = (Border)textBox.Template.FindName("underBrush", textBox);
+
+                if (underBrush != null)
+                {
+                    DoubleAnimation animation = new DoubleAnimation
+                    {
+                        From = 0,
+                        To = textBox.ActualWidth,
+                        Duration = TimeSpan.FromSeconds(0.23),
+                        AccelerationRatio = 1
+                    };
+
+                    //PowerEase easing = new PowerEase { Power = 6 };
+                    //animation.EasingFunction = easing;
+
+                    underBrush.BeginAnimation(Border.WidthProperty, animation);
+                }
+            }
+        }
+
+        private void PowerTB_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.OnlyNumsTB();
+        }
+
+        private void PhotoB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "Image files (*.png *.jpeg)|*.png;*.jpeg";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                PhotoIB.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
+                selectedPhotoFile = openFileDialog.FileName;
+
+                EnableButton();
+            }
         }
     }
 }

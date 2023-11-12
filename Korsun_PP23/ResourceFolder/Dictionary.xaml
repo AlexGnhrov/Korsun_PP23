@@ -355,7 +355,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-
+    <!--Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="InteractionEllipse"-->
 
 
 
@@ -466,11 +466,7 @@
                             <Setter Property="Background" TargetName="splitBorder" Value="{StaticResource ComboBox.Pressed.Editable.Button.Background}"/>
                             <Setter Property="BorderBrush" TargetName="splitBorder" Value="{StaticResource ComboBox.Pressed.Editable.Button.Border}"/>
                         </MultiDataTrigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" Value="Gray"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Opacity" Value="0.17"/>
-                        </Trigger>
+    
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -635,10 +631,25 @@
             <Trigger Property="IsDropDownOpen" Value="True">
                 <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
             </Trigger>
-            <Trigger Property="IsEnabled" Value="false">
+
+            <Trigger Property="IsReadOnly" Value="True">
+                <Setter Property="IsEnabled" Value="False"/>
+            </Trigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="False"/>
+                    <Condition Property="IsReadOnly" Value="True"/>
+                </MultiTrigger.Conditions>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="False"/>
+                    <Condition Property="IsReadOnly" Value="False"/>
+                </MultiTrigger.Conditions>
                 <Setter Property="Foreground" Value="Black"/>
                 <Setter Property="Opacity" Value="0.56"/>
-            </Trigger>
+            </MultiTrigger>
         </Style.Triggers>
     </Style>
     <Style x:Key="FocusVisual">

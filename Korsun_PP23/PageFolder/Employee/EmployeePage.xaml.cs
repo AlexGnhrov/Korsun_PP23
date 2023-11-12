@@ -105,6 +105,8 @@ namespace Korsun_PP23.PageFolder
 
                     DBEntities.GetContext().User.Remove(user);
                     DBEntities.GetContext().SaveChanges();
+
+                    UpdateList(); 
                 }
             }
             catch (Exception ex)

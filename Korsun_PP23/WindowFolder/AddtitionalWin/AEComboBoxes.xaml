@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Korsun_PP23.WindowFolder.AddtitionalWin"
         mc:Ignorable="d"
-        Height="275" Width="533.333"
+        Height="275" Width="500"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         AllowsTransparency="True"
@@ -27,12 +27,16 @@
                          Height="45" Width="auto"
                          TextChanged="TB_TextChanged" />
 
-                <StackPanel Orientation="Horizontal" Margin="0,20">
+                <Grid  Margin="0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="165"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Button Content="Назад"
                             BorderThickness="1"
                             Foreground="{StaticResource MaterialDesignBody}"
                             Background="Transparent"
-                            Height="45" Width="150"
+                            Height="45" 
                             Margin="10,0"
                             Click="BackBt_Click"/>
 
@@ -40,8 +44,8 @@
                     <Button x:Name="AddEditBtn" Content="Название кнопки" IsEnabled="False"
                             Grid.Column="2" Margin="10"  Tag=""
                             Height="45" 
-                            Click="AddEditBtn_Click" Width="300"/>
-                </StackPanel>
+                            Click="AddEditBtn_Click" Width="auto"/>
+                </Grid>
             </StackPanel>
         </Grid>
     </Border>

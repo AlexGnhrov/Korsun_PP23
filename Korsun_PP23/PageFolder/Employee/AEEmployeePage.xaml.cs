@@ -28,6 +28,7 @@ namespace Korsun_PP23.PageFolder.Employee
 
         bool isEdit = false;
         string saveLogin = "";
+        string savePhone = "";
 
         string selectedPhotoFile = "";
 
@@ -59,7 +60,7 @@ namespace Korsun_PP23.PageFolder.Employee
                     FirstNameEmpTB.Text = user.FirstNameUser;
                     MiddleNameEmpTB.Text = user.MiddleNameUser;
                     LastNameEmpTB.Text = user.LastNameUser;
-                    PhoneEmpTB.Text = user.PhoneNum;
+                    PhoneEmpTB.Text = savePhone = user.PhoneNum;
                     DateOfBirthDP.SelectedDate = user.BirthDate;
                     LogintTB.Text = saveLogin = user.Login;
                     PasswordTB.Text = user.Password;
@@ -87,19 +88,7 @@ namespace Korsun_PP23.PageFolder.Employee
 
         private void PhotoB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            openFileDialog.Filter = "Image files (*.png *.jpeg)|*.png;*.jpeg";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                PhotoIB.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
-                selectedPhotoFile = openFileDialog.FileName;
-
-                EnableButton();
-            }
         }
 
         private void AddEdtBtn_Click(object sender, RoutedEventArgs e)
@@ -112,6 +101,15 @@ namespace Korsun_PP23.PageFolder.Employee
                 {
                     MBClass.ErrorMB("Такой логин уже существует");
                     PasswordTB.Focus();
+                    return;
+                }
+
+                var checkPhone = DBEntities.GetContext().User.FirstOrDefault(u => u.PhoneNum == PhoneEmpTB.Text);
+
+                if (checkPhone != null && savePhone != PhoneEmpTB.Text)
+                {
+                    MBClass.ErrorMB("Такой телефон уже существует");
+                    PhoneEmpTB.Focus();
                     return;
                 }
 

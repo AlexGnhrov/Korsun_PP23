@@ -14,6 +14,12 @@ namespace Korsun_PP23.DataFolder
     
     public partial class Contract
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Contract()
+        {
+            this.Warehouse = new HashSet<Warehouse>();
+        }
+    
         public int IdContract { get; set; }
         public string ContractNumber { get; set; }
         public System.DateTime ContractDate { get; set; }
@@ -21,5 +27,7 @@ namespace Korsun_PP23.DataFolder
         public int IdOrganization { get; set; }
     
         public virtual Organization Organization { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Warehouse> Warehouse { get; set; }
     }
 }

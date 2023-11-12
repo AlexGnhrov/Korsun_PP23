@@ -104,7 +104,7 @@
 
 
                     <DataGridTextColumn Header="Номер" Width="200"
-                                        Binding="{Binding GOSNumber}"
+                                        Binding="{Binding TSNumber}"
                                         CellStyle="{StaticResource NumVehicle}"
                                         HeaderStyle="{StaticResource StandartHeader}"/>
 
@@ -137,6 +137,7 @@
                                     </Button.Content>
                                     <Button.ContextMenu>
                                         <ContextMenu Placement="Left" >
+                                            <MenuItem Header="Подробнее" Click="MoreInfoMI_Click"/>
                                             <MenuItem Header="Редактировать" Click="EditVehicleMI_Click"/>
                                             <MenuItem Header="Удалить" Foreground="#E81123" Click="RemoveVehicleMI_Click"/>
                                         </ContextMenu>

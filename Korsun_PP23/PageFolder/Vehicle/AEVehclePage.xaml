@@ -29,7 +29,7 @@
 
         <Border CornerRadius="10" Background="{StaticResource MainColor}" Grid.Row="1" Margin="10" Opacity="0.90"/>
 
-        <Grid Grid.Row="2" MaxWidth="1400" MaxHeight="500" HorizontalAlignment="Center" VerticalAlignment="Center" >
+        <Grid Grid.Row="2" MaxWidth="1400" MaxHeight="600" HorizontalAlignment="Center" VerticalAlignment="Center" >
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -38,97 +38,147 @@
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="325"/>
+                    <RowDefinition/>
                     <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
 
-                <Grid >
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
 
 
-                    <StackPanel Orientation="Vertical"  Margin="15,10,0,15">
-                        <Label Content="Тип транспорта*" Margin="15,15"/>
-                        <Label Content="Наименование*" Margin="15,15"/>
-                        <Label Content="Номер ТС*" Margin="15,15"/>
-                        <Label Content="Водитель*" Margin="15,15"/>
-                    </StackPanel>
+                        <StackPanel Orientation="Vertical"  Margin="15,10,0,15">
+                            <Label Content="Тип транспорта*" Margin="15,10"/>
+                            <Label Content="Наименование*" Margin="15,10"/>
+                            <Label Content="Номер ТС*" Margin="15,10"/>
+                            <Label Content="Водитель*" Margin="15,10"/>
+                            <Label Content="СТС*" Margin="15,10"/>
+                            <Label Content="ПТС*" Margin="15,10"/>
+                            <Label Content="Мощность (ЛС)*" Margin="15,10"/>
+                            <Label Content="Тип двигателя*" Margin="15,10"/>
+                            <Label Content="Год выпуска*" Margin="15,10"/>
+                        </StackPanel>
 
-                    <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,10,0,0">
-                        <ComboBox Name="VehicleTypeCB" Height="45" Margin="0,10"
+                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,5,0,0">
+                            <ComboBox Name="VehicleTypeCB" Height="45" Margin="0,10"
                                   SelectedValuePath="IdTransportType"
                                   SelectionChanged="СB_SelectionChanged">
-                            <ComboBox.ItemTemplate>
+                                <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50"/>
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
-                                            
-                                        <Image>
-                                            <Image.Style>
-                                                <Style TargetType="Image">
-                                                    <Setter Property="Source" Value="/ResourceFolder/ImageFolder/ListVechileIcon/LittleTruckIcon.png"/>
-                                                    <Setter Property="Width" Value="60"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IdTransportType}" Value="2">
-                                                            <Setter Property="Source" Value="/ResourceFolder/ImageFolder/ListVechileIcon/BigTruckIcon.png"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                        </Image>
 
-                                        <TextBlock Text="{Binding TransportType1}" Margin="10,0" VerticalAlignment="Center" Grid.Column="1" TextWrapping="Wrap"/>
-                                            
-                                    </Grid>
+                                            <Image>
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Source" Value="/ResourceFolder/ImageFolder/ListVechileIcon/LittleTruckIcon.png"/>
+                                                        <Setter Property="Width" Value="60"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IdTransportType}" Value="2">
+                                                                <Setter Property="Source" Value="/ResourceFolder/ImageFolder/ListVechileIcon/BigTruckIcon.png"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+
+                                            <TextBlock Text="{Binding TransportType1}" Margin="10,0" VerticalAlignment="Center" Grid.Column="1" TextWrapping="Wrap"/>
+
+                                        </Grid>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <TextBox x:Name="NameVehicleTB"  MaxLength="40" Template="{DynamicResource AddEditTextBox}" Height="45" Margin="0,10"
-                                 TextChanged="TB_TextChanged"/>
-                        <TextBox x:Name="NumVehicleTB" MaxLength="10"
+                            </ComboBox>
+                            <TextBox x:Name="NameVehicleTB"  MaxLength="40" Template="{DynamicResource AddEditTextBox}" Height="45" Margin="0,5"
+                                 TextChanged="TB_TextChanged" MouseEnter="NameVehicleTB_MouseEnter"/>
+                            <TextBox x:Name="NumVehicleTB" MaxLength="10"
                                  Template="{DynamicResource AddEditTextBox}"
-                                 Height="45" Margin="0,10"
+                                 Height="45" Margin="0,5"
                                  CharacterCasing="Upper"
                                  PreviewTextInput="NumVehicleTB_PreviewTextInput"
                                  TextChanged="TB_TextChanged"/>
-                        <ComboBox x:Name="DriverCB"
+                            <ComboBox x:Name="DriverCB"
                                   SelectedValuePath="IdUser"
-                                  Height="45" Margin="0,10"
+                                  Height="45" Margin="0,5"
                                   SelectionChanged="СB_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1} {2}">
-                                                <Binding Path="FirstNameUser"/>
-                                                <Binding Path="MiddleNameUser"/>
-                                                <Binding Path="LastNameUser"/>
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                                    <Binding Path="FirstNameUser"/>
+                                                    <Binding Path="MiddleNameUser"/>
+                                                    <Binding Path="LastNameUser"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <TextBox x:Name="StsTB" MaxLength="10"
+                                 Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5"
+                                 CharacterCasing="Upper"
+                                 TextChanged="TB_TextChanged"/>
+
+                            <TextBox x:Name="PtsTB" MaxLength="4"
+                                 Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5"
+                                 CharacterCasing="Upper"
+                                 TextChanged="TB_TextChanged"/>
+
+                            <TextBox x:Name="PowerTB" MaxLength="10"
+                                 Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5"
+                                 CharacterCasing="Upper"
+                                 PreviewTextInput="PowerTB_PreviewTextInput"
+                                 TextChanged="TB_TextChanged"/>
+
+                            <TextBox x:Name="TypeEngineTB" MaxLength="10"
+                                 Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5"
+                                 CharacterCasing="Upper"
+                                 TextChanged="TB_TextChanged"/>
+
+                            <TextBox x:Name="YearOfProductionTB" MaxLength="4"
+                                 Template="{DynamicResource AddEditTextBox}"
+                                 Height="45" Margin="0,5"
+                                 CharacterCasing="Upper"                                     
+                                 TextChanged="TB_TextChanged"/>
 
 
+                        </StackPanel>
+
+
+                    </Grid>
+
+                    <Border x:Name="BorderPhoto" Grid.Column="1" Cursor="Hand" Margin="30" BorderBrush="{StaticResource MainColor}"
+                    Width="450" Height="400" VerticalAlignment="Center"  MouseLeftButtonUp="PhotoB_MouseLeftButtonUp"
+                    CornerRadius="10">
+                        <Border.Background>
+                            <ImageBrush x:Name="PhotoIB" ImageSource="/Korsun_PP23;component/ResourceFolder/ImageFolder/PhotoPlaceHolder.png"/>
+                        </Border.Background>
+                    </Border>
                 </Grid>
 
 
 
-                <Button x:Name="AddEdtBtn" Content="Добавить склад" IsEnabled="False"
+
+                <Button x:Name="AddEdtBtn" Content="Добавить транспорт" IsEnabled="False"
                         Grid.Row="1"
                         Height="45" Width="auto"
-                        VerticalAlignment="Top" HorizontalAlignment="Center" Click="AddEdtBtn_Click">
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Click="AddEdtBtn_Click">
                 </Button>
 
             </Grid>
